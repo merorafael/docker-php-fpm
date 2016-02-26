@@ -1,7 +1,7 @@
-Docker: PHP and extensions
-==========================
+Docker: PHP, extensions and PHP-FPM
+===================================
 
-Docker image with PHP and extensions.
+Docker image with PHP, extensions and PHP-FPM.
 
 Extensions
 ----------
