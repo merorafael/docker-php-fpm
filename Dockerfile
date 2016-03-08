@@ -50,6 +50,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && echo 'instantclient,/opt/oracle/instantclient_12_1/' | pecl install oci8 \
     && pecl install apcu \
+    && git clone https://github.com/phpredis/phpredis /usr/src/php/ext/redis \
+    && cd /usr/src/php/ext/redis && git checkout -b php7 origin/php7 \
+    && docker-php-ext-configure redis \
     && git clone https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
     && cd /usr/src/php/ext/memcached && git checkout -b php7 origin/php7 \
     && docker-php-ext-configure memcached \
@@ -69,6 +72,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
             sockets \
             zip \
             memcached \
+            redis \
             pcntl \
     && docker-php-ext-enable \
             oci8 \

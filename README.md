@@ -27,6 +27,7 @@ Extensions
 - pdo_dblib
 - pdo_sqlite
 - memcached
+- redis
 - simplexml
 - apcu
 - opcache
