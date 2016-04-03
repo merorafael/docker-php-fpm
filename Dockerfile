@@ -53,13 +53,13 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && echo 'instantclient,/opt/oracle/instantclient_12_1/' | pecl install oci8 \
     && pecl install apcu \
-    && docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/opt/oracle/instantclient_12_1,12.1 \
     && git clone https://github.com/phpredis/phpredis /usr/src/php/ext/redis \
     && cd /usr/src/php/ext/redis && git checkout -b php7 origin/php7 \
     && docker-php-ext-configure redis \
     && git clone https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
     && cd /usr/src/php/ext/memcached && git checkout -b php7 origin/php7 \
     && docker-php-ext-configure memcached \
+    && docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/opt/oracle/instantclient_12_1,12.1 \
     && docker-php-ext-configure pdo_dblib --with-libdir=/lib/x86_64-linux-gnu \
     && docker-php-ext-install \
             iconv \
@@ -71,8 +71,8 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
             mysqli \
             pdo_pgsql \
             pdo_mysql \
-            pdo_dblib \
             pdo_oci \
+            pdo_dblib \
             soap \
             sockets \
             zip \
