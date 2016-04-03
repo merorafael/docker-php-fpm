@@ -24,6 +24,7 @@ Extensions
 - oci8
 - pdo_pgsql
 - pdo_mysql
+- pdo_oci
 - pdo_dblib
 - pdo_sqlite
 - memcached

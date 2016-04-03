@@ -12,9 +12,12 @@ ADD build/pgdg.list /etc/apt/sources.list.d/
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
       apt-key add -
 
-# Add Oracle Instantclient
-COPY build/instantclient-*.zip /opt/oracle/
-RUN unzip /opt/oracle/instantclient-basic-linux.x64-12.1.0.2.0.zip -d /opt/oracle \
+# Install Oracle Instantclient
+RUN mkdir /opt/oracle \
+    && cd /opt/oracle \
+    && wget https://s3.amazonaws.com/merofile/instantclient-basic-linux.x64-12.1.0.2.0.zip \
+    && wget https://s3.amazonaws.com/merofile/instantclient-sdk-linux.x64-12.1.0.2.0.zip \
+    && unzip /opt/oracle/instantclient-basic-linux.x64-12.1.0.2.0.zip -d /opt/oracle \
     && unzip /opt/oracle/instantclient-sdk-linux.x64-12.1.0.2.0.zip -d /opt/oracle \
     && ln -s /opt/oracle/instantclient_12_1/libclntsh.so.12.1 /opt/oracle/instantclient_12_1/libclntsh.so \
     && ln -s /opt/oracle/instantclient_12_1/libclntshcore.so.12.1 /opt/oracle/instantclient_12_1/libclntshcore.so \
@@ -50,6 +53,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && echo 'instantclient,/opt/oracle/instantclient_12_1/' | pecl install oci8 \
     && pecl install apcu \
+    && docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/opt/oracle/instantclient_12_1,12.1 \
     && git clone https://github.com/phpredis/phpredis /usr/src/php/ext/redis \
     && cd /usr/src/php/ext/redis && git checkout -b php7 origin/php7 \
     && docker-php-ext-configure redis \
@@ -68,6 +72,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
             pdo_pgsql \
             pdo_mysql \
             pdo_dblib \
+            pdo_oci \
             soap \
             sockets \
             zip \
