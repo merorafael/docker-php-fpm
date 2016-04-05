@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         unzip
 
 # Add PostgreSQL repository
-ADD build/pgdg.list /etc/apt/sources.list.d/
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
       apt-key add -
 
@@ -24,8 +24,10 @@ RUN mkdir /opt/oracle \
     && ln -s /opt/oracle/instantclient_12_1/libocci.so.12.1 /opt/oracle/instantclient_12_1/libocci.so \
     && rm -rf /opt/oracle/*.zip
 
+
 # Install PHP extensions deps
-RUN apt-get update && apt-get install --no-install-recommends -y \
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y \
         postgresql-server-dev-9.5 \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
@@ -39,10 +41,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         libaio-dev \
         libmemcached-dev \
         freetds-dev
-
-# Clean repository
-RUN apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- \
@@ -83,3 +81,22 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
             oci8 \
             apcu \
             opcache
+
+# Clean repository
+RUN apt-get clean \
+    && apt-get remove -y \
+        postgresql-server-dev-9.5 \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libmcrypt-dev \
+        libpng12-dev \
+        zlib1g-dev \
+        libicu-dev \
+        g++ \
+        unixodbc-dev \
+        libxml2-dev \
+        libaio-dev \
+        libmemcached-dev \
+        freetds-dev \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
