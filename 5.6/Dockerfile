@@ -80,19 +80,4 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 
 # Clean repository
 RUN apt-get clean \
-    && apt-get remove -y \
-        postgresql-server-dev-9.5 \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libmcrypt-dev \
-        libpng12-dev \
-        zlib1g-dev \
-        libicu-dev \
-        g++ \
-        unixodbc-dev \
-        libxml2-dev \
-        libaio-dev \
-        libmemcached-dev \
-        freetds-dev \
-    && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
