@@ -51,6 +51,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && echo 'instantclient,/opt/oracle/instantclient_12_1/' | pecl install oci8 \
     && pecl install apcu \
+    && pecl install apcu_bc-1.0.3 \
     && git clone https://github.com/phpredis/phpredis /usr/src/php/ext/redis \
     && cd /usr/src/php/ext/redis && git checkout -b php7 origin/php7 \
     && docker-php-ext-configure redis \
@@ -80,11 +81,8 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
     && docker-php-ext-enable \
             oci8 \
             apcu \
-            opcache
-
-# Install and enable APCu backwards
-RUN pecl install apcu_bc-beta \
-    && echo 'extension=apc.so' >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini
+            opcache \
+    && docker-php-ext-enable apc --ini-name 10-docker-php-ext-apc.ini
 
 # Clean repository
 RUN apt-get clean \
