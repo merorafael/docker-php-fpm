@@ -37,6 +37,7 @@ Resources
 ---------
 
 - composer
+- phpunit
 - wget
 - vim
 - git

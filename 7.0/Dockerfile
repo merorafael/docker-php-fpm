@@ -50,9 +50,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && echo 'instantclient,/opt/oracle/instantclient_12_1/' | pecl install oci8 \
-    && git clone https://github.com/phpredis/phpredis /usr/src/php/ext/redis \
-    && cd /usr/src/php/ext/redis && git checkout -b php7 origin/php7 \
-    && docker-php-ext-configure redis \
+    && pecl install redis \
     && git clone https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
     && cd /usr/src/php/ext/memcached && git checkout -b php7 origin/php7 \
     && docker-php-ext-configure memcached \
@@ -74,10 +72,10 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
             sockets \
             zip \
             memcached \
-            redis \
             pcntl \
     && docker-php-ext-enable \
             oci8 \
+            redis \
             opcache
 
 # Install APCu and APC backward compatibility
@@ -85,6 +83,10 @@ RUN pecl install apcu \
     && pecl install apcu_bc-1.0.3 \
     && docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini \
     && docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
+
+# Install PHPUnit 5.5
+RUN wget https://phar.phpunit.de/phpunit.phar -O /usr/local/bin/phpunit \
+    && chmod +x /usr/local/bin/phpunit
 
 # Clean repository
 RUN apt-get clean \
