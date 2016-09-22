@@ -32,6 +32,7 @@ Extensions
 - simplexml
 - apcu
 - opcache
+- ftp
 
 Resources
 ---------

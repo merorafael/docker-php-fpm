@@ -71,6 +71,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
             sockets \
             zip \
             pcntl \
+            ftp \
     && docker-php-ext-enable \
             oci8 \
             apcu \

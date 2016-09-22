@@ -73,6 +73,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
             zip \
             memcached \
             pcntl \
+            ftp \
     && docker-php-ext-enable \
             oci8 \
             redis \
