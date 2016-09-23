@@ -39,6 +39,7 @@ RUN apt-get update \
         unixodbc-dev \
         libxml2-dev \
         libaio-dev \
+        libgearman-dev \
         libmemcached-dev \
         freetds-dev
 
