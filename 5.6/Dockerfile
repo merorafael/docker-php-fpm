@@ -52,6 +52,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
     && echo 'instantclient,/opt/oracle/instantclient_12_1/' | pecl install oci8-2.0.10 \
     && pecl install apcu-4.0.10 \
     && pecl install redis-2.2.8 \
+    && pecl install gearman \
     && pecl install memcached \
     && docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/opt/oracle/instantclient_12_1,12.1 \
     && docker-php-ext-configure pdo_dblib --with-libdir=/lib/x86_64-linux-gnu \
@@ -77,6 +78,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
             apcu \
             memcached \
             redis \
+            gearman \
             opcache
 
 # Install PHPUnit 5.5

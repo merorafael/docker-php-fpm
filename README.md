@@ -3,6 +3,15 @@ Docker: PHP, extensions and PHP-FPM
 
 Official [PHP docker image](https://hub.docker.com/_/php/) with additional extensions.
 
+Supported tags
+--------
+
+| PHP Version | Tags            |
+| ----------- | --------------- |
+| 7.1.0RC2    | `7.1`           |
+| 7.0.11      | `7.0`, `latest` |
+| 5.6.26      | `5.6`           |
+
 Extensions
 ----------
 
@@ -33,6 +42,7 @@ Extensions
 - apcu
 - opcache
 - ftp
+- gearman *(PHP 5.6 only)*
 
 Resources
 ---------
