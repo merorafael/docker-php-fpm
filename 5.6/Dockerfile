@@ -58,7 +58,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
     && pecl install apcu-4.0.10 \
     && pecl install redis-2.2.8 \
     && pecl install gearman \
-    && pecl install memcached \
+    && pecl install memcached-2.2.0 \
     && docker-php-ext-install \
             iconv \
             mbstring \
