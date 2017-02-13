@@ -51,12 +51,12 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && echo 'instantclient,/opt/oracle/instantclient_12_1/' | pecl install oci8-2.0.10 \
+    && docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/opt/oracle/instantclient_12_1,12.1 \
+    && docker-php-ext-configure pdo_dblib --with-libdir=/lib/x86_64-linux-gnu \
     && pecl install apcu-4.0.10 \
     && pecl install redis-2.2.8 \
     && pecl install gearman \
     && pecl install memcached \
-    && docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/opt/oracle/instantclient_12_1,12.1 \
-    && docker-php-ext-configure pdo_dblib --with-libdir=/lib/x86_64-linux-gnu \
     && docker-php-ext-install \
             iconv \
             mbstring \
@@ -82,7 +82,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
             gearman \
             opcache
 
-# Install PHPUnit 5.5
+# Install PHPUnit
 RUN wget https://phar.phpunit.de/phpunit.phar -O /usr/local/bin/phpunit \
     && chmod +x /usr/local/bin/phpunit
 

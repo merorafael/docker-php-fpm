@@ -31,6 +31,8 @@ Extensions
 - pgsql
 - mysqli
 - oci8
+- sqlsrv *(PHP 7.0 or above)*
+- pdo_sqlsrv *(PHP 7.0 or above)*
 - pdo_pgsql
 - pdo_mysql
 - pdo_oci
