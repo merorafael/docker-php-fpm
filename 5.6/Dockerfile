@@ -41,7 +41,9 @@ RUN apt-get update \
         libaio-dev \
         libgearman-dev \
         libmemcached-dev \
-        freetds-dev
+        freetds-dev \
+	libssl-dev \
+	openssl
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- \
